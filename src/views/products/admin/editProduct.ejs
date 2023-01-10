@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../../partials/head.ejs') %>
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../../partials/header.ejs', {user: user, admin: admin}) %>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="h container-fluid fondo-registro general">
+        <div class="container formulario-crear-producto">
+            <form action="/admin/productos/<%= product.id %>/editar?_method=PUT" method="POST" id="form">
+                <h1>Formulario de edición del producto:<br><%= product.name %></h1>
+
+                <div class="show-errors">
+                    <% if (typeof errors != 'undefined') { %>
+                    <p class="darkred">ERROR</p>
+                    <ul>
+                        <% errors.forEach(error => { %>
+                        <li class="darkred">
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                    </ul>
+                    <% } %>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-8">
+                        <label for="inputTitle">Nombre del producto</label>
+                        <input value="<%= product.name %>" type="text" class="form-control" id="inputTitle" aria-describedby="" name="name">
+                        <span class="d-none invalid-feedback">El nombre del producto no puede estar vacio</span>
+                    </div>
+                    <div class="form-group col-12 col-md-4">
+                        <label for="inputPrice">Precio</label>
+                        <input value="<%= product.price %>" type="text" step="0.01" class="form-control" id="inputPrice" aria-describedby="" name="price">
+                        <span class="d-none invalid-feedback">El precio del producto no puede estar vacio y deben ser solo números</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDescription">Descripción</label>
+                    <textarea type="text" class="form-control" id="inputDescription" aria-describedby="" name="description"><%= product.description %></textarea>
+                    <span class="d-none invalid-feedback">La descripción del producto no puede estar vacia y debe tener al menos 20 caracteres</span>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-9 col-md-5">
+                        <label for="inputCategory">Categoría</label>
+                        <select class="form-style" name="category" id="inputCategory">
+                            <option value="">Selecionar categoría</option>
+                            <% categories.forEach(category => { %>
+                                <% if (category.name == product.category.name) { %>
+                                    <option selected value="<%= category.id %>"><%= category.name %></option>
+                                <% } else { %>
+                                    <option value="<%= category.id %>"><%= category.name %></option>
+                                <% } %> 
+                            <% }) %>
+                        </select>
+                        <span class="d-none invalid-feedback">Debe seleccionar una categoría para el producto</span>
+                    </div>
+                    <div class="form-group col-3 col-md-3">
+                        <label for="inputSlices">Porciones</label>
+                        <input value="<%= product.slices %>" type="text" step="1" min="0" class="form-control" id="inputSlices" aria-describedby=""
+                            name="slices">
+                        <span class="d-none invalid-feedback">Debe usar un número entre 1 y 20 para indicar las porciones del prodcuto</span>
+                    </div>
+
+                    <div class="form-group col-12 col-md-4">
+                        <label for="inputStock">Stock</label>
+                        <input value="<%= product.stock %>" type="text" step="1" class="form-control" id="inputStock" aria-describedby="" name="stock">
+                        <span class="d-none invalid-feedback">Debe usar un número entre 1 y 500 para indicar el stock del prodcuto</span>
+                    </div>
+                </div>
+
+                <!-- Eitar imagenes a resolver -->
+                <!-- <div class="form-row d-flex justify-content-between">
+                    <div class="col-12">
+                        <label for="">Subir imagenes del producto</label>
+                    </div>
+                    <div class="custom-file upload-file1">
+                        <input name="imageLg" type="file" class="custom-file-input" id="inputImageLg" accept="image/*">
+                        <label class="custom-file-label" for="inputImageLg" data-browse="Seleccionar">Subir imagen
+                            principal del producto</label>
+                    </div>
+                    <div class="custom-file upload-file2">
+                        <input name="image" type="file" class="custom-file-input" id="inputImage" accept="image/*">
+                        <label class="custom-file-label" for="inputImage" data-browse="Seleccionar">Subir otra imagen del producto</label>
+                    </div>
+                </div> -->
+
+                <div class="d-lg-flex justify-content-lg-between ">
+                    <div class="edit-buttons">
+                        <button type="reset" class="btn btn-warning mt-4">Borrar cambios</button>
+                    </div>
+                    <div class="edit-buttons">
+                        <button type="submit" name="submit"class="btn btn-success mt-4">Confirmar cambios</button>
+                    </div>
+                </div>
+            </form>
+            <div class="delete-button">
+                <form action="/admin/productos/<%= product.id %>/eliminar?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger mt-4">Eliminar producto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+
+    <!-- footer -->
+    <%- include('../../partials/footer.ejs') %>
+    <!-- /footer -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.1/validator.js" integrity="sha512-UpL7Xolu0DUOeG5Zmm7zn/4ZK4wCR7xYEp/fAO0bySJFqoeJG0r4kKPk+YVpuf+2UiEJNAiqSIU35gajAE0mgg==" crossorigin="anonymous"></script>
+    <script src="/js/products/createEdit.js"></script>
+</body>
+
+</html>

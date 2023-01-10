@@ -1,0 +1,79 @@
+<div class="titulo-productos titulo-detalle col-12 mb-2">
+    <h2 class="text-capitalize">
+        <a href="/" class="filtro-lg">Home /</a> 
+        <a href="<%= userType %>/productos" class="filtro-lg">Productos /</a> 
+        <a href="<%= userType %>/productos/<%= product.id %>" class="filtro-lg"><%= product.name %></a>
+    </h2>
+</div>
+
+<div class="product-detail-card row mb-5">
+    <div class="porduct-images mb-3 col-12 col-lg-8 image-wrap">
+        <div class="first-product-image mb-3 image" style="background-image: url('/images/upload/<%= product.image_1%>');"></div>
+        <%if (((product.image_2==null)&&(product.image_3==null)&&(product.image_4==null))||((product.image_2!=null)&&(product.image_3!=null)&&(product.image_4==null))||((product.image_2!=null)&&(product.image_3==null)&&(product.image_4==null))){%>
+            <div class="more-product-images mr-2"> 
+        <%} else {%> 
+           <div class="more-product-images d-flex justify-content-between">   
+        <%}%>
+            <div class="other-product-image firstImg d-cots">
+                <img src="/images/upload/<%= product.image_1%>" class="image-first selectImg" alt="<%= product.name %>">
+            </div>
+            <%if (product.image_2!=null){%>
+            <div class="other-product-image secondImg d-cots">
+                <img src="/images/upload/<%= product.image_2%>" class="image-second" alt="<%= product.name %>">
+            </div>  
+            <%} if (product.image_3!=null){%>  
+            <div class="other-product-image thirdImg d-cots">
+                <img src="/images/upload/<%= product.image_3%>" class="image-third" alt="<%= product.name %>">
+            </div>
+            <%} if (product.image_4!=null){%>
+            <div class="other-product-image quarterImg d-cots">
+                <img src="/images/upload/<%= product.image_4%>" class="image-quarter" alt="<%= product.name %>">
+            </div>
+            <%}%>
+        </div>
+    </div>
+
+    <!-- <div class="col-lg-2">
+
+    </div> -->
+
+    <div class="product-information col-12 col-lg-4">
+        <h1 class="text-size-26"><b><%= product.name %></b></h1>
+        <h2 class="precio-producto text-size-23">$<%= product.price %></h2>
+        <p><%= product.description %></p>
+        <div class="cantidad-producto mb-4">
+
+            <form action="/carrito" method="POST">
+                <div class="buy-form col-12 d-flex justify-content-between">
+                    <div class="increment-number mr-2">
+                        <input type="number" name="qty" min="1" max="100" value="1" />
+                       
+                        <%- include('./inputSpinner.ejs') %>
+
+                        <%- include('./cardInputs.ejs', {product:product})%>
+                    </div>
+        
+                    <div class="buy-button-div ml-2">
+                        <button class="buy-button" type="submit"><b>Comprar</b></button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+        <p><%= product.info %></p>
+        <p><b>Categoría: </b><%= product.category.name %></p>
+        <p><b>Nombre: </b><%= product.name %></p>
+        
+        <!-- logos -->
+        <!-- <p class="share-logos"><b>Compartir: </b>
+            <a href="#"><i class="logo-redes-facebook fab fa-facebook-f"></i></a>
+            <a href="#"><i class="logo-redes-instagram fab fa-instagram"></i></a>
+            <a href="#"><i class="logo-redes-twitter fab fa-twitter"></i></a>
+            <a href="#"><i class="logo-redes-google fab fa-google-plus-g"></i></a>
+            <a href="#"><i class="logo-redes-email far fa-envelope"></i></a>
+            <a href="#"><i class="logo-redes-whatsapp fab fa-whatsapp"></i></a>
+        </p> -->
+        <!-- /logos -->
+
+    </div>
+</div>

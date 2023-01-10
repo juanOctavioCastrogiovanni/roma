@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('partials/head.ejs') %>
+
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('partials/header.ejs', {user: user, admin: admin}) %>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="h container-fluid container-carrito ">
+        <img src="/images/carrito/techo.png" class="fondo-carrito" alt="techo carrito">
+    </div>
+    <div class="container general main-carrito">
+        <div class="row my-5">
+            <div class="col-12 col-md-8 cart-main-card">
+                <div class="row border-bottom my-3">
+                    <div class="col-4">
+                        <h3></h3>
+                    </div>
+                    <div class="col-2">
+                        <h3>Producto</h3>
+                    </div>
+                    <div class="col-2">
+                        <h3>Precio unitario</h3>
+                    </div>
+                    <div class="col-2">
+                        <h3>Cantidad</h3>
+                    </div>
+                    <div class="col-2">
+                        <h3>Subtotal</h3>
+                    </div>
+                </div>
+
+                <% products.forEach(product => { %>
+                <div class="row border-bottom my-3">
+                    <div class="col-4">
+                        <h3><img src="/images/upload/<%= product.image_1 %>" class="ejemplo-foto-carrito"></h3>
+                    </div>
+                    <div class="col-2 my-auto">
+                        <h3>
+                            <nombre>
+                        </h3><%= product.name %>
+                    </div>
+                    <div class="col-2 my-auto color-darkred">
+                        <h3>$<%= product.price %></h3>
+                    </div>
+                    <div class="col-2 my-auto">
+                        <form action="/carrito?_method=PUT" method="POST" class="d-flex">
+
+                            <input type="number" name="qty" value="<%= product.cart_product.qty %>" class="w-50" min="1"
+                                max="10">
+
+                            <%- include('partials/cartInputs.ejs', {product: product}) %>
+                            <button class="btn"><i class="fas fa-sync text-success"></i></button>
+                        </form>
+                    </div>
+                    <div class="col-1 my-auto color-darkred">
+                        <h3>$<%= product.cart_product.sub_total_price %></h3>
+                    </div>
+                    <div class="col-1 my-auto">
+                        <form action="/carrito?_method=DELETE" method="POST">
+                            <input type="hidden" name="id" value="<%= product.id %>">
+                            <button class="btn btn-sm mx-3" type="submit">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <% }) %>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card cart-totals">
+                    <div class="card-body">
+
+                        <div class="cart-total-products mb-3">
+                            <h6 class="card-title tam-text">Productos en el carrito</h6>
+                            <p class="card-text color-darkred"><b><%= cart.products_total %></b></p>
+                        </div>
+
+                        <div class="cart-total-price mb-3">
+                            <h5 class="card-title tam-text">Total de la compra</h5>
+                            <p class="card-text color-darkred"><b>$<%= cart.total_price %></b></p>
+                        </div>
+
+                        <% if (cart.products_total > 0) { %>
+                            <form action="/carrito/comprar" method="POST" id="cart-form">
+                                
+                                <select name="address_id" class="custom-select filter-sm-select mb-2" required>
+                                    <option value="" selected disabled>Seleccioná la dirección de envío</option>
+                                    <option value="1">Retiro por el local</option>
+                                    <% if (addresses != undefined) { %>
+                                        <% addresses.forEach(address => { %>
+                                            <option value="<%=address.id%>"><%= address.alias %> (<%= address.street%> <%=address.number %>)</option>
+                                        <% }) %> 
+                                    <% } %>
+                                        
+                                </select>
+
+                                <small><a class="reset-link" href="/usuarios/perfil/direcciones">Agregar una nueva dirección</a></small>
+
+                                <div class="form-group">
+                                    <textarea type="text"  class="form-control" id="general_comments" aria-describedby="" name="general_comments" placeholder="¿Alguna aclaración sobre el envío?"></textarea>
+                                </div>
+
+                                <div>
+                                    <button class="buy-cart-button my-2"><a href="#" class="reset-link"><b class="c-white">Finalizar compra</b></a></button>
+                                </div>
+                            </form>
+                        <% } %>
+
+                        <div class="mt-4">
+                            <a class="reset-link more-options-cart" href="/productos">
+                                <p><i class="fas fa-angle-left"></i><b> Seguir comprando</b></p>
+                            </a>
+                            <a class="reset-link more-options-cart" href="/carrito">
+                                <p><i class="fas fa-sync"></i> <b>Actualizar</b></p>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- Main -->
+
+    <!-- footer -->
+    <%- include('partials/footer.ejs') %>
+    <!-- /footer -->
+
+</body>
+
+</html>

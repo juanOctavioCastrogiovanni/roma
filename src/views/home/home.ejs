@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+  <!-- Header -->
+  <%- include('../partials/header.ejs', {user: user, admin: admin}) %>
+  <!-- /Header -->
+  
+  <%- include('carrusel.ejs') %>
+  <div>
+  <div class="h container-fluid general tam-text-2 fondo-categoria">
+    <div class="row">
+      <div class="col-12 col-lg-5 fondo-ladrillo">
+        <a href="/productos?filter=2"><img src="/images/Home/categories/burger.png" class="tam-burger" alt="Productos salados"></a>
+        <h2 class="titulo-burger text-center"><strong><a href="/productos?filter=2">Productos salados</a></strong></h2>
+      </div>
+      <div class="col-12 col-lg-7 fondo-torta">
+        <h2 class="titulo-torta text-center my-2"><strong><a href="/productos?filter=1">Productos dulces</a></strong></h2>
+        <a href="/productos?filter=1"><img src="/images/Home/categories/cake2.png" class="tam-cake" alt="Productos dulces"></a>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid fondo-local caja-flexible general">
+    <div>
+      <h1><a href="#" class="text-white" >¡Conocenos!</a></h1>
+    </div>
+  </div>
+  <div class="container-fluid general tam-text-2 fondo-categoria">
+    <div class="row">
+      <div class="col-12 col-lg-7 fondo-cafe">        
+        <a href="/productos?filter=4"><img src="/images/Home/categories/cafe.png" class="tam-cafe" alt="Productos dulces"></a>
+        <h2 class="titulo-cafe text-center my-3"><strong><a href="/productos?filter=4">Meriendas</a></strong></h2>
+      </div>
+      <div class="col-12 col-lg-5 fondo-brunch">
+        <a href="/productos?filter=6"><img src="/images/Home/categories/sandwich.png" class="tam-brunch" alt="Productos salados"></a>
+        <h2 class="titulo-burger text-center"><strong><a href="/productos?filter=6">Brunch</a></strong></h2>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid fondo-mensaje-home general">
+    <div class="row">
+      <div class="col-12 col-xl-8">
+        <h2> </h2>
+      </div>
+      <div class="col-12 col-xl-4">
+        <div class="texto-pizza">
+              
+                <h1 class="font-weight-bold">Amamos la pizza</h1>
+                
+              <p>Picsa, pixa o pitsa, según quien lo pronuncie. Amamos que la coman de parados en el mostrador, o en la mesa con amigos. Con la mano o con cubiertos. Amamos que entren por el olorcito o porque vinieron después del cine. Que coman la fainá (o fáina, como prefieran) fría o caliente; arriba o abajo de la muzza. Que se la lleven para desayunar al día siguiente. Amamos que la pizza sea parte de nuestras vidas. Tanto la amamos, que desde 1942 estamos abiertos desde la mañana hasta la madrugada, porque no hay hora para comer una buena pizza. Una pizza hecha con amor, nuestra pizza.</p>
+           </div>
+        </div>
+    </div>
+   
+  </div>
+  
+</div>
+
+  <!-- footer -->
+  <%- include('../partials/footer.ejs') %>
+  <!-- /footer -->
+
+</body>
+
+</html>

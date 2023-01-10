@@ -1,0 +1,30 @@
+<% productAll.forEach(product => { %>
+    <a href="<%= userType %>/productos/<%= product.id %>">
+        <div class="col-12 col-sm-6 col-lg-4 mb-2">
+            <div class="card tarjetas-productos product-card-inProducts d-flex">
+                <div class="imagen-producto-productos">
+                    <img class="card-img-top imagen-producto-producto" src="/images/upload/<%=product.image_1%>"
+                        alt="imagen de <%= product.name %>">
+                </div>
+                <div class="card-body body-card">
+                    <div class="d-flex justify-content-between">
+                        <div class="titulo-precio">
+                            <p class="titulo-producto"><%=product.name%></p>
+                        </div>
+
+                        <form action="/carrito" method="POST">
+                            <%- include('./cardsInputs.ejs', {product: product})%>
+                            <div class="add-to-cart-products">
+                                <button type="submit" class="btn"><a href="#"><i class="fas fa-shopping-cart fa-2x"></i></a></button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="titulo-precio">
+                    <p class="precio-producto">$<%= product.price %></p>
+                </div>
+            </div>
+        </div>
+    </a>
+    <% }) %>

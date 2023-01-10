@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header.ejs', {user: user, admin: admin}) %>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="h container-fluid general my-4 reset-link">
+        <div class="row">
+        
+            <!-- Filtro sm -->
+            <%- include('./productsPartials/filter-sm.ejs') %>
+            <!-- /Filtro sm -->
+
+        </div>
+        <div class="col-lg-1 ">
+            <p> </p>
+        </div>
+
+        <!-- Filtro lg -->
+        <%- include('./productsPartials/filter-lg.ejs') %>
+        <!-- /Filtro lg -->
+
+        <div class="main-products col-12 col-lg-8">
+
+            <div class="cartel-aviso-productos d-none d-lg-block text-center p-2 tex">
+                <p>Tené en cuenta que los pedidos son con 48 hs de anticipación en el caso de la línea de
+                    Pasteliería Dulce <br> y 72 hs en la línea de Pastelería Salada.<br>Los pedidos son procesados de
+                    lunes a viernes de 9 a 18 hs.</p>
+            </div>
+
+            <!-- Productos -->
+            <%- include('./productsPartials/cards.ejs', {userType: ''}) %>
+            <!-- /Productos -->
+            
+        </div>
+    </div>
+    </div>
+
+    </div>
+    <!-- Main -->
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+    <!-- /footer -->
+
+</body>
+
+<!-- <script src="/js/products/filter.js"></script>   -->
+ 
+
+</html>

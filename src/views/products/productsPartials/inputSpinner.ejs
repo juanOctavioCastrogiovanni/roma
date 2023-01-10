@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery Simple Spinner Demo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Lato:400);
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        input[type=number] {
+            width: 70px;
+            height: 35px;
+            padding: 0;
+            font-family: Lato;
+            font-weight: 700;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            text-align: center;
+            color: darkred;
+            border: 2px darkred solid;
+            background: none;
+            outline: none;
+            pointer-events: none;
+        }
+
+        span.spinner {
+            display: flex;
+            height: 40px;
+            user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        span.spinner>.sub,
+        span.spinner>.add {
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            font-family: Lato;
+            font-weight: 700;
+            font-size: 1.2em;
+            line-height: 33px;
+            color: darkred;
+            border: 2px darkred solid;
+            border-right: 0;
+            border-radius: 2px 0 0 2px;
+            cursor: pointer;
+            transition: 0.1s linear;
+            -o-transition: 0.1s linear;
+            -ms-transition: 0.1s linear;
+            -moz-transition: 0.1s linear;
+            -webkit-transition: 0.1s linear;
+        }
+
+        span.spinner>.add {
+            top: 0;
+            border: 2px darkred solid;
+            border-left: 0;
+            border-radius: 0 2px 2px 0;
+        }
+
+        span.spinner>.sub:hover,
+        span.spinner>.add:hover {
+            background: darkred;
+            color: #25323B;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .buy-button-div {
+           float: right;
+        }
+        .buy-button {
+            color: white;
+            background-color: darkred;
+            border: none;
+            padding: 4px 15px;
+            letter-spacing: 2px;
+            height: 35px;
+            width: 140px;
+            font-size: 20px;
+        }
+
+        .buy-button:hover, .buy-button:focus {
+            color: black;
+            background-color: darkred;
+            transform: scale(1.4);
+        }
+
+    </style>
+</head>
+
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        (function ($) {
+            $.fn.spinner = function () {
+                this.each(function () {
+                    var el = $(this);
+
+                    // add elements
+                    el.wrap('<span class="spinner"></span>');
+                    el.before('<span class="sub">-</span>');
+                    el.after('<span class="add">+</span>');
+
+                    // substract
+                    el.parent().on('click', '.sub', function () {
+                        if (el.val() > parseInt(el.attr('min')))
+                            el.val(function (i, oldval) {
+                                return --oldval;
+                            });
+                    });
+
+                    // increment
+                    el.parent().on('click', '.add', function () {
+                        if (el.val() < parseInt(el.attr('max')))
+                            el.val(function (i, oldval) {
+                                return ++oldval;
+                            });
+                    });
+                });
+            };
+        })(jQuery);
+
+        $('input[type=number]').spinner();
+    </script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') +
+                '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</body>
+
+</html>

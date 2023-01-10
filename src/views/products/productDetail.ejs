@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header.ejs', {user: user, admin: admin}) %>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <main>
+        <div class="h container general my-4 reset-link">
+            <div class="row">
+
+                <!-- Producto -->
+                <%- include('./productsPartials/card.ejs', {userType: ""})%>
+                <!-- /Producto -->
+
+                <!-- Productos recomendados -->
+                <%- include('./productsPartials/related.ejs', {userType: ""}) %>
+                <!-- /Productos recomendados -->
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Main -->
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+    <!-- /footer -->
+
+    <!-- Scripts -->
+    <%- include('./productsPartials/imagesScripts.ejs') %>
+    <!-- /Scripts -->
+
+    
+</body>
+
+</html>

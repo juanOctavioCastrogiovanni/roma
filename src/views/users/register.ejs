@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header.ejs', {user:undefined, admin:undefined}) %>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="h container-fluid fondo-registro general">
+        <form action="/usuarios/registro" method="POST" id="register-form">
+
+            <div class="container formulario-login">
+                <h1 class="text-center">Formulario de registro</h1>
+                <% if (logueo = true) {%>
+                <h3 class="text-center text-danger">Para comprar algún producto usted tiene que tener una cuenta
+                </h3>
+                <% } %>
+
+                <div class="login-register-card">
+                    <div class="show-errors">
+                        <% if (typeof errors != 'undefined') { %>
+                        <p class="darkred">ERROR</p>
+                        <ul>
+                            <% errors.forEach(error => { %>
+                            <li class="darkred">
+                                <%= error.msg %>
+                            </li>
+                            <% }) %>
+                        </ul>
+                        <% } %>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-6">
+                            <label for="inputName">Nombre</label>
+                            <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="name"
+                                value="<%=data.name%>">
+                            <span class="d-none invalid-feedback">El nombre no puede estar vacio</span>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for:="inputLastName">Apellido</label>
+                            <input type="text" class="form-control" id="inputLastName" aria-describedby="emailHelp"
+                                name="lastname" value="<%=data.lastname%>">
+                            <span class="d-none invalid-feedback">El apellido no puede estar vacio</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail1">Email</label>
+                        <input type="text" class="form-control" id="inputEmail1" aria-describedby="emailHelp" name="email"
+                            value="<%=data.email%>">
+                        <span class="d-none invalid-feedback">El email debes ser válido</span>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-6">
+                            <label for="inputPassword1">Contraseña</label>
+                            <input type="password" class="form-control" id="inputPassword1" name="password">
+                            <span class="d-none invalid-feedback">La contraseña debe tener como minimo 8
+                                caracteres</span>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="inputPassword2">Confirmar contraseña</label>
+                            <input type="password" class="form-control" id="inputPassword2" name="passwordConfirmation">
+                            <span class="d-none invalid-feedback">Las contraseñas no coinciden</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-6">
+                            <label for="inputPhone">Teléfono celular principal</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="cell_phone" value="<%=data.cell_phone%>">
+                            <span class="d-none invalid-feedback">En este campo debe estar completo y no puede haber letras</span>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="inputPhone2">Teléfono celular alternativo</label>
+                            <input type="text" class="form-control" id="inputPhone2" aria-describedby="emailHelp"
+                                name="cell_phone_2" value="<%=data.cell_phone_2%>" placeholder="Opcional">
+                            <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+                        </div>
+                        
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-6">
+                            <label for="phone">Teléfono</label>
+                            <input type="text" class="form-control" id="phone" aria-describedby="emailHelp"
+                                name="phone" value="<%=data.phone%>" placeholder="Opcional">
+                            <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+                        </div>
+                     </div>
+                     <!-- <div class="form-row d-none">
+                        <div class="form-group col-12 col-md-4">
+                            <label for="inputPhone">Alias</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="alias">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label for="inputPhone">Ciudad</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="city">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label for="inputPhone">Provincia</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="prov">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="inputPhone">Calle</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="street">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                        <div class="form-group col-6 col-md-2">
+                            <label for="inputPhone">Numero</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="street">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                        <div class="form-group col-6 col-md-1">
+                            <label for="inputPhone">Piso</label>
+                            <input type="number" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="floor">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                        <div class="form-group col-12 col-md-1">
+                            <label for="inputPhone">Dto.</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="departament">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                        <div class="form-group col-12 col-md-2">
+                            <label for="inputPhone">Codigo postal</label>
+                            <input type="number" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="zip_code">
+                            <span class="d-none invalid-feedback">En este campo...</span>
+                        </div>
+                 -->
+                    
+                    <!-- Este es el form de direcciones -->
+                   
+                    
+
+                    <!-- A revisar en dónde se cargan los datos adicionales -->
+                    <!-- <div class="form-row">
+                            <div class="form-group col-9 col-md-3">
+                                <label for="inputAdress1">Calle</label>
+                                <input type="text" class="form-control" id="inputAdress1"
+                                    aria-describedby="emailHelp" name="address">
+                            </div>
+                            <div class="form-group col-3 col-md-1">
+                                <label for="inputAdress2">Numero</label>
+                                <input type="text" min="0" class="form-control" id="inputAdress2"
+                                    aria-describedby="emailHelp" name="addressNumber">
+                            </div>
+
+                            <div class="form-group col-12 col-md-5">
+                                <label for="inputAdress3">Localidad</label>
+                                <input type="text" class="form-control" id="inputAdress3"
+                                    aria-describedby="emailHelp" name="city">
+                            </div>
+                            
+                        </div> -->
+
+                    <div class="d-flex">
+                        <a type="submit" class="btn btn-primary registrarme mr-3" href="/usuarios/login">Ya tengo una
+                            cuenta</a>
+                        <button type="submit" name="submit" class="btn btn-success mx-1">Registrarse</button>
+                    </div>
+                </div>  
+            </div>
+        </form>
+
+    </div>
+    </div>
+    <!-- Main -->
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+    <!-- /footer -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.1/validator.js"
+        integrity="sha512-UpL7Xolu0DUOeG5Zmm7zn/4ZK4wCR7xYEp/fAO0bySJFqoeJG0r4kKPk+YVpuf+2UiEJNAiqSIU35gajAE0mgg=="
+        crossorigin="anonymous"></script>
+    <script src="/js/users/register.js"></script>
+</body>
+
+</html>

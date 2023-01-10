@@ -1,0 +1,35 @@
+<div class="more-products col-12 border-top pt-5">
+    <div class="title-products-related col-12 mb-4">
+        <h2>Productos recomendados</h2>
+    </div>
+    <div class="productos-recomendados">
+        <div class="row">
+            <% productsRelated.forEach(productRelated => { %>
+                
+                <a class="link-product-related" href="<%= userType %>/productos/<%= productRelated.id %>">
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="card tarjetas-productos product-card-inProductDetail">
+                            <div class="imagen-producto-productos">
+                                <img class="card-img-top imagen-producto-producto" src="/images/upload/<%= productRelated.image_1 %>"
+                                    alt="imagen de <%= productRelated.name %>">
+                            </div>
+                            <div class="card-body position-relative">
+                                <div class="d-flex justify-content-between ">
+                                    <div class="titulo-precio">
+                                        <p class="titulo-producto"><%= productRelated.name %></p>
+                                        <p class="precio-producto">$<%= productRelated.price %></p>
+                                    </div>
+
+                                    <div class="add-to-cart-products">
+                                        <a href="#"><i class="fas fa-shopping-cart fa-2x"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+            <% }) %>
+        </div>
+    </div>
+</div>

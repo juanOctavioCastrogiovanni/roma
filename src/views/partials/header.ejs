@@ -1,0 +1,157 @@
+<header>
+    <div  id="whatsapp_chat">
+        <a id="whatsapp_chat_a" target="_blank" href="https://web.whatsapp.com/send?phone=54911&amp;text=Hola Roma">
+            <i class="fab fa-whatsapp fa-w-14 fa-5x" id="whatsapp_chat_i"></i>
+        </a>
+    </div>
+    <div id="detras" class="h container-fluid detras general in index-11 d-none">
+        <nav class="h navbar navbar-expand-lg navbar-light">
+            <a class="h navbar-brand" href="#"></a>
+            <button class="h navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="h navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Small -->
+            <div class="h collapse navbar-collapse" id="navbarNav">
+                <ul class="h navbar-nav d-flex justify-content-around w-100">
+                   <li class="h nav-item izq">
+                       <a class="h nav-link" href="/">Inicio <i class="h fas fa-stroopwafel"></i></i><span class="h sr-only">(current)</span></a>
+                   </li>
+                   <li class="h nav-item izq">
+                    <%if (admin != undefined) {%>
+                        <a class="h nav-link" href="/admin/productos">Productos <i class="h fas fa-cheese"></i></a>
+                     <%} else {%>
+                         <a class="h nav-link" href="/productos">Productos <i class="h fas fa-cheese"></i></a>
+                      <%}%>
+                   </li>
+                   <li class="h nav-item izq">
+                       <a class="h nav-link" href="#">¿Quienes somos? <i class="h fas fa-bread-slice"></i></a>
+                   </li>
+                   <li class="h nav-item izq">
+                       <a class="h nav-link" href="#">Promociones <i class="h fas fa-hamburger"></i></a>
+                   </li>
+                   <li class="h nav-item izq">
+                    <a class="h nav-link" href="#">Contacto <i class="h fas fa-cookie"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /Small -->
+
+        </nav>
+    </div>
+    <div class="container-fluid fondo-header general in index-20">
+        <div class="row">
+            <div class="h col-5">
+                <img src="/images/header/more/arbol-izquierada.png" class="h laurel-L" alt="laurel">
+            </div>
+
+            <div class="col-3">
+                <a href="/"><img src="/images/Logos/roma-logo.png" class="h logo-header" alt="ROMA"></a>
+
+                <div class="contenedor-padre-redes">
+                    <div>
+                        <a href="https://www.facebook.com/ROMASCONFITERIA/" class="h logo-redes-facebook"><i class="h fab fa-facebook fa-1x"></i></a>
+                        <a href="https://www.instagram.com/romaconfiteria/" class="h logo-redes-instagram"><i class="h fab fa-instagram fa-1x"></i></a>
+                    </div>
+                    <div>
+
+                        <!-- Boton de usuario -->
+                        <a href="/carrito" class="h logo-carrito"><i class="h fas fa-shopping-cart fa-1x"></i></a>
+                        <!-- si es usuario entonces -->
+                        <% if (user != undefined) { %>
+                         <a id="userBtn" href="#" class=" logo-users-success"><i  class=" fas fa-user fa-1x"></i></a>
+                         <div id="userBtnClick" class="animacion">
+                            <p class=" m-1 btnClass p-3">Hola <%=user%></p> 
+                            <form action="/usuarios/perfil" method="GET" class="profile-border-top">
+                                <button class="btn btnD btnProfile">Ir a Perfil</button>
+                            </form>
+                        <!-- si ese usuario es admin entonces -->
+                            <%if (admin==1||user=='Admin') {%>
+                                <form action="/admin/productos/crear" method="GET" class="profile-border-top">
+                                    <button class="btn btnD btnLogOut admin">Crear producto</button>
+                                </form>    
+                        <!-- si ese usuario no es admin entonces -->
+                            <%} else {%>
+                                
+                                <form action="/usuarios/profile" method="GET" class="profile-border-top">
+                                    <button class="btn btnD btnLogOut admin">Profile</button>
+                                </form>
+                            <%} %>
+                            <form action="/usuarios/logout" method="GET" class="profile-border-top">
+                                <button class="btn btnD btnProfile">Cerrar Sesion</button>
+                            </form>
+                        
+                            
+                            
+                            <!-- <p class=" btnClass exit p-2"><a href="/usuarios/perfil" class=" linkExit">ir a Perfil</a></p>
+                            <p class=" btnClass exit p-2"><a href="/usuarios/logout" class=" linkExit">Cerrar sesión</a></p> -->
+                        </div>
+                        <% } else {%>
+                         <a href="/usuarios/login" class="h logo-users"><i class="h fas fa-user fa-1x"></i></a>
+                         <%}%>
+                         
+                    </div>
+
+                </div>
+                <%if (admin != undefined) {%>
+                    <form action="/admin/productos/search" method="GET">
+                        <input class="h mi-input" type="text" name="search" placeholder="Buscar">
+                      </form>
+                  <%} else {%>
+
+                      <form action="/productos/search" method="GET">
+                        <input class="h mi-input" type="text" name="search" placeholder="Buscar">
+                      </form>
+                <%}%>
+                <div class="h"> </div>
+            </div>
+
+            <div class="h col-2">
+                <p> </p>
+            </div>
+
+
+
+            <div class="h col-2">
+                <img src="/images/header/more/arbol-derecha.png" class="h laurel-R" alt="laurel-R">
+            </div>
+
+            <!-- Large -->
+            <nav id="delante" class="h navbar navbar-expand-lg navbar-light fondo-oscuro">
+                <a class="h navbar-brand" href="#"></a>
+                <button class="h navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="h navbar-toggler-icon"></span>
+                </button>
+                <div class="h collapse navbar-collapse" id="navbarNav">
+                    <ul class="h navbar-nav d-flex justify-content-around w-100">
+                       <li class="h nav-item izq">
+                           <a class="h nav-link" href="/">Inicio <i class="h fas fa-stroopwafel"></i></i><span class="h sr-only">(current)</span></a>
+                       </li>
+                       <li class="h nav-item izq">
+                        <%if (admin != undefined) {%>
+                           <a class="h nav-link" href="/admin/productos">Productos <i class="h fas fa-cheese"></i></a>
+                        <%} else {%>
+                            <a class="h nav-link" href="/productos">Productos <i class="h fas fa-cheese"></i></a>
+                         <%}%>
+                       </li>
+                       <li class="h nav-item izq">
+                           <a class="h nav-link" href="#">¿Quienes somos? <i class="h fas fa-bread-slice"></i></a>
+                       </li>
+                       <li class="h nav-item izq">
+                           <a class="h nav-link" href="#">Promociones <i class="h fas fa-hamburger"></i></a>
+                       </li>
+                       <li class="h nav-item izq">
+                        <a class="h nav-link" href="#">Contacto <i class="h fas fa-cookie"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- /Large -->
+        </div>
+    </div>  
+    
+    <script type="module" src="/js/fx/header.js"></script>
+    
+</header>

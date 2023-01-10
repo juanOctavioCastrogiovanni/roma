@@ -1,0 +1,62 @@
+<form action="/usuarios/perfil/editar?_method=PUT" method="POST" id="edit-profile-form">
+
+    <div class="edit-profile-card">
+        <div class="show-errors">
+            <% if (typeof errors != 'undefined') { %>
+            <p class="darkred">ERROR</p>
+            <ul>
+                <% errors.forEach(error => { %>
+                <li class="darkred">
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+            </ul>
+            <% } %>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                <label for="inputName">Nombre</label>
+                <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="name"
+                    value="<%=userLoggedIn.name%>">
+                <span class="d-none invalid-feedback">El nombre no puede estar vacio</span>
+            </div>
+            <div class="form-group col-12 col-md-6">
+                <label for="inputLastName">Apellido</label>
+                <input type="text" class="form-control" id="inputLastName" aria-describedby="emailHelp" name="lastname"
+                    value="<%=userLoggedIn.last_name%>">
+                <span class="d-none invalid-feedback">El apellido no puede estar vacio</span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-12 col-md-4">
+                <label for="inputPhone1">Teléfono celular principal</label>
+                <input type="text" class="form-control" id="inputPhone1" aria-describedby="emailHelp"
+                    name="cell_phone" value="<%=phone.cell_phone%>">
+                <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+            </div>
+            <div class="form-group col-12 col-md-4">
+                <label for="inputPhone2">Teléfono celular alternativo</label>
+                <input type="text" class="form-control" id="inputPhone2" aria-describedby="emailHelp" name="cell_phone_2" value="<%=phone.cell_phone_2%>">
+                <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+            </div>
+            <div class="form-group col-12 col-md-4">
+                <label for="phone">Teléfono celular alternativo</label>
+                <input type="text" class="form-control" id="phone" aria-describedby="emailHelp" name="phone" value="<%=phone.phone%>">
+                <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+            </div>
+        </div>
+
+        <div class="d-lg-flex justify-content-lg-between ">
+            <div class="edit-buttons">
+                <button type="reset" class="btn btn-warning mt-4">Borrar cambios</button>
+            </div>
+            <div class="edit-buttons">
+                <button type="submit" name="submit"class="btn btn-success mt-4">Confirmar cambios</button>
+            </div>
+        </div>
+
+    </div>
+
+</form>

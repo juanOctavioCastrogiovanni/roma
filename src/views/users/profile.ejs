@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header.ejs', {user: user, admin: admin}) %>
+    <!-- /Header -->
+
+
+    <!-- Main -->
+
+    <div class="h container-fluid fondo-registro general">
+        <div class="row profile-container">
+
+
+            <% if (typeof errors != 'undefined') { %>
+            <div class="d-none d-lg-block col-lg-4"></div>
+            <div class="col-12 col-lg-8">
+                <p class="darkred">ERROR AL EDITAR EL PERFIL, REVISE LOS SIGUIENTES ERRORES<br>EN LA SECCIÓN DE
+                    "EDITAR PERFIL"</p>
+                <ul>
+                    <% errors.forEach(error => { %>
+                    <li class="darkred">
+                        <%= error.msg %>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+            <% } %>
+
+            <% if (cartSold == true) {%>
+            <div class="d-none d-lg-block col-lg-4"></div>
+            <div class="col-12 col-lg-8">
+                <h4 class="text-center text-danger"><b>Tu compra ha sido procesada con éxito.<br>Podrás verla en la
+                        sección de "pedidos" en tu perfil.</b></h4>
+            </div>
+            <% } %>
+
+            <div class="col-12 col-md-3 profile-menu">
+                <ul class="d-flex flex-column">
+                    <li class="text-center mb-4 profile-list reset-link"><button type="button"
+                            class="btn btn-menu panel-btns first-menu selectedMenu"><b>Datos</b></button></li>
+                    <li class="text-center mb-4 profile-list reset-link"><button type="button"
+                            class="btn btn-menu panel-btns second-menu"><b>Direcciones</b></button></li>
+                    <li class="text-center mb-4 profile-list reset-link"><button type="button"
+                            class="btn btn-menu panel-btns third-menu"><b>Pedidos</b></button></li>
+                    <li class="text-center mb-4 profile-list reset-link"><button type="button"
+                            class="btn btn-menu panel-btns fourth-menu"><b>Editar perfil</b></button></li>
+                    <li class="text-center profile-list reset-link d-none d-md-block">
+
+                        <a href="/usuarios/logout"><button type="submit" class="btn btn-danger registrarme panel-btns"><b>Cerrar sesión</b></button></a>
+                   
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-md-9 main-panel">
+
+                <div class="profile-panel datos first-panel login-register-card">
+                    <h1 class="font-weight-bold">Datos de la cuenta</h1>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-6">
+                            <p class="tittle font-weight-bold"> Nombre:</p>
+                            <p class="userInfo"> <%=  userLoggedIn.name %></p>
+
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <p class="tittle font-weight-bold"> Apellido:</p>
+                            <p class="userInfo"> <%=  userLoggedIn.last_name %></p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-6">
+                            <p class="tittle font-weight-bold"> Email:</p>
+                            <p class="userInfo"> <%=  userLoggedIn.email %></p>
+
+                        </div>
+                        <div class="form-group">
+                            <p class="tittle font-weight-bold"> Teléfono principal:</p>
+                            <p class="userInfo"> <%=  phone.cell_phone %></p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <% if (phone.cell_phone_2) { %>
+                        <div class="form-group col-12 col-md-6">
+                            <p class="tittle font-weight-bold"> Teléfono celular alternativo:</p>
+                            <p class="userInfo"> <%=  phone.cell_phone_2 %></p>
+                        </div>
+                        <% } %>
+                        <% if (phone.phone) { %>
+                        <div class="form-group col-12 col-md-6">
+                            <p class="tittle font-weight-bold"> Teléfono :</p>
+                            <p class="userInfo"> <%=  phone.phone %></p>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="profile-panel addresses d-none second-panel login-register-card">
+                    <div class="addresses-panel">
+                        <h1 class="font-weight-bold col-12">Tus direcciones</h1>
+                        <% if (addresses.length > 0) { %>
+                        <%addresses.forEach(address=>{%>
+
+                        <div class="card profile-address-card p-0 mb-4">
+                            <div class="card-header w-100">
+                                <%= address.alias %>
+                            </div>
+                            <ul class="list-group list-group-flush w-100">
+
+
+                                <li class="list-group-item">Calle: <%= address.street %></li>
+
+                                <li class="list-group-item">Altura: <%= address.number %></li>
+
+                                <% if(address.dto) { %>
+                                <li class="list-group-item">Dpto: <%= address.dto %></li>
+                                <% } %>
+
+                                <% if(address.dto) { %>
+                                <li class="list-group-item">Piso: <%= address.floor %></li>
+                                <% } %>
+
+                                <li class="list-group-item">Ciudad: <%= address.city %></li>
+
+                                <li class="list-group-item">Provincia: <%= address.prov%></li>
+
+                                <li class="list-group-item">CP: <%= address.zip_code%></li>
+
+
+                                <li class="list-group-item d-flex justify-content-around">
+                                    <div>
+                                        <form action="/usuarios/perfil/direcciones/edicion" method="POST" class="">
+                                            <input type="hidden" name="address_id" value="<%=address.id%>">
+                                            <button type="submit" class="btn"><i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                    <div>
+                                        <form action="/usuarios/perfil/direcciones?_method=DELETE" method="POST"
+                                            id="delete-address-btn">
+                                            <input type="hidden" name="address_id" value="<%=address.id%>">
+                                            <button class="btn"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+
+                        <% }) %>
+                        <% } else { %>
+
+                        <h4 class="my-3">Todavía no agregaste una dirección</h4>
+                        <% } %>
+
+                        <form action="/usuarios/perfil/direcciones" method="GET">
+                            <button class="btn btn-info">Agregar una direccion</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="profile-panel orders d-none third-panel login-register-card">
+                    <h1 class="font-weight-bold col-12">Tus pedidos</h1>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">N° pedido</th>
+                                <th scope="col">Fecha de compra</th>
+                                <th scope="col">Productos comprados</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <% if (carts.length > 0) { %>
+                            <% carts.forEach(cart => { %>
+                            <tr class="">
+                                <th scope="row"><%= cart.id %></th>
+                                <td><%= cart.updated_at %></td>
+                                <td><%= cart.products_total %></td>
+                                <td><%= cart.total_price %></td>
+                            </tr>
+                            <% }) %>
+                            <% } %>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="profile-panel edit d-none fourth-panel login-register-card">
+                    <h1 class="font-weight-bold">Editar tus datos</h1>
+                    <form action="/usuarios/perfil/editar?_method=PUT" method="POST" id="edit-profile-form">
+
+                        <div class="edit-profile-card">
+
+
+                            <div class="form-row">
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="inputName">Nombre</label>
+                                    <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp"
+                                        name="name" value="<%=userLoggedIn.name%>">
+                                    <span class="d-none invalid-feedback">El nombre no puede estar vacio</span>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="inputLastName">Apellido</label>
+                                    <input type="text" class="form-control" id="inputLastName"
+                                        aria-describedby="emailHelp" name="lastname"
+                                        value="<%=userLoggedIn.last_name%>">
+                                    <span class="d-none invalid-feedback">El apellido no puede estar vacio</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-12 col-md-4">
+                                    <label for="inputPhone1">Teléfono celular principal</label>
+                                    <input type="text" class="form-control" id="inputPhone1"
+                                        aria-describedby="emailHelp" name="cell_phone" value="<%=phone.cell_phone%>">
+                                    <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+                                </div>
+                                <div class="form-group col-12 col-md-4">
+                                    <label for="inputPhone2">Teléfono celular alternativo</label>
+                                    <input type="text" class="form-control" id="inputPhone2"
+                                        aria-describedby="emailHelp" name="cell_phone_2"
+                                        value="<%=phone.cell_phone_2%>">
+                                    <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+                                </div>
+                                <div class="form-group col-12 col-md-4">
+                                    <label for="phone">Teléfono celular alternativo</label>
+                                    <input type="text" class="form-control" id="phone" aria-describedby="emailHelp"
+                                        name="phone" value="<%=phone.phone%>">
+                                    <span class="d-none invalid-feedback">En este campo no puede haber letras</span>
+                                </div>
+                            </div>
+
+                            <input type="hidden" class="form-control" name="phone_id" value="<%=phone.id%>">
+
+                            <div class="d-lg-flex justify-content-lg-between ">
+                                <div class="edit-buttons">
+                                    <button type="reset" class="btn btn-warning mt-4">Borrar cambios</button>
+                                </div>
+                                <div class="edit-buttons">
+                                    <button type="submit" name="submit" class="btn btn-success mt-4">Confirmar
+                                        cambios</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <li class="text-center profile-list reset-link d-md-none mt-5">
+                    <a href="/perfil/logout"><button type="submit" class="btn btn-danger registrarme w-50">Cerrar sesión</button></a>
+                </li>
+            </div>
+
+        </div>
+    </div>
+
+
+    </div>
+    <!-- /Main -->
+
+    <!-- /footer -->
+    <%- include('../partials/footer.ejs') %>
+    <!-- /footer -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.1/validator.js"
+        integrity="sha512-UpL7Xolu0DUOeG5Zmm7zn/4ZK4wCR7xYEp/fAO0bySJFqoeJG0r4kKPk+YVpuf+2UiEJNAiqSIU35gajAE0mgg=="
+        crossorigin="anonymous">
+    </script>
+    <script type="module" src="/js/users/profile.js"></script>
+</body>
+
+</html>

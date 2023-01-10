@@ -1,0 +1,253 @@
+<div class="filtro-lg d-none d-lg-block col-lg-2">
+    <div class="">
+        
+
+    
+    <%if (admin==1){%> 
+        <div class="tipo-producto-filtro">
+            <p><b>Tipo de producto:</b></p>
+            <ul class="lista-filtro-productos">
+                <!-- se imprime la lista de Tipos de categorias que puede elegir el usuario -->
+                <% categories.forEach(category => { %>
+                <form action="/admin/productos" method="GET">
+                    <% if (typeof filterPriceMin != 'undefined') { %>
+                    <input type="hidden" name="filterPriceMin" value="<%=filterPriceMin%>">
+                    <input type="hidden" name="filterPriceMax" value="<%=filterPriceMax%>">
+                    <% }%>
+                    <li class="lista-filtro-productos my-1">
+                        <button class="transparentButtom" name="filter" value="<%= category.id %>"><%= category.name%>
+                        </button>
+                    </li>
+                </form>
+                <% }) %>
+            </ul>
+        </div>
+        <!-- Se puede elegir el filtro de manera individual o de intervalo de precio -->
+        <div class="precio-producto-filtro">
+            <p><b>Precios:</b></p>
+            <!-- input de minimo -->
+            <form action="/admin/productos" method="GET" class="unit my-2 d-none">
+                <% if (typeof filter != 'undefined') { %>
+                <input type="hidden" name="filter" value="<%=filter%>">
+                <% }%>
+                <input type="number" name="filterPriceMin" class="price-filter_value" value="" placeholder="Mín" min="0" max="10000" required>
+                <button type="submit" class="transparentButtom"><i class="fas fa-arrow-circle-right"></i></button>
+            </form>	
+            <!-- input de maximo -->
+            <form action="/admin/productos" method="GET" class="unit my-2 d-none">
+                <% if (typeof filter != 'undefined') { %>
+                <input type="hidden" name="filter" value="<%=filter%>">
+                <% }%>
+                <input type="number" name="filterPriceMax" class="price-filter_value" value="" placeholder="Max" min="0" max="10000" required>
+                <button type="submit" class="transparentButtom"><i class="fas fa-arrow-circle-right"></i></button>
+            </form>
+
+            <!-- Botones para seleccionar si el precio se elige por intervalos o por unidad -->
+            <button id="unit_price" class="btn btn-dark d-none">agregar Min y Max</button>
+            <button id="interv_price" class="btn btn-dark d-none">agregar intervalo</button>
+            
+            <!-- input de intervalo de precios -->
+            <form id="formFilter" action="/admin/productos" method="GET" class="my-2 interv">
+                <% if (typeof filter != 'undefined') { %>
+                <input type="hidden" name="filter" value="<%=filter%>">
+                <% }%>
+                <div class="d-flex">
+                    <div>
+                        <input type="number" name="filterPriceMin" class="price-filter_value mb-2" value="" placeholder="Min" min="0" max="10000" required>
+                        <input type="number" name="filterPriceMax" class="price-filter_value" value="" placeholder="Max" min="0" max="10000" required>
+                    </div>
+                    <span class="d-none invalid-feedback">El valor minimo no puede ser igual o mas alto que el valor maximo.</span>
+                    <button id="buttomFilter" type="submit" name="submit" class="transparentButtom"><i class="fas fa-arrow-circle-right"></i></button>
+                </div>
+            </form>						
+        </div>
+        <!-- si hay un filtro por categoria se muestra por pantalla -->
+        <% if (typeof categoryFilter != 'undefined') { %>	
+            
+            <% if ((typeof filterPriceMin != 'undefined')&&(typeof filterPriceMax != 'undefined')) { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/admin/productos?filterPriceMin=<%=filterPriceMin%>&filterPriceMax=<%=filterPriceMax%>">x</a></p>        
+<!--             
+            cuando borro si tenia algo en el precio minimo lo dejo
+            <%} else if (typeof filterPriceMin != 'undefined') { %>	
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/productos?filterPriceMin=<%=filterPriceMin%>">x</a></p>
+            
+            cuando borro si tenia algo en el precio maximo lo dejo
+            <% } else if (typeof filterPriceMax != 'undefined') { %>    
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/productos?filterPriceMax=<%=filterPriceMax%>">x</a></p>        
+             -->
+            <!-- cuando borro si tenia algo en el precio minimo y maximo lo dejo -->
+            <%} else if ((typeof filterPriceMin == 'undefined')&&(typeof filterPriceMax == 'undefined')) { %>	
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/admin/productos">x</a></p>
+           
+            <!-- cuando borro si tenia algo en el precio minimo lo dejo -->
+            <%}%>   
+        <%}%>
+
+
+
+        <!-- falla cuando primero pones la categoria y luego un precio minimo -->
+
+
+
+        <!-- si hay un filtro de intervalo se muestra por pantalla -->
+        <%if ((typeof filterPriceMin != 'undefined')&&(typeof filterPriceMax != 'undefined')) { %>
+            
+            <%if (typeof categoryFilter == 'undefined') { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=filterPriceMin%>-<%=filterPriceMax%> <a class="text-danger" href="/admin/productos">x</a></p>
+            
+            <!-- cuando borro si tenia algo en la categoria lo dejo -->
+            <% } else { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=filterPriceMin%>-<%=filterPriceMax%> <a class="text-danger" href="/admin/productos?filter=<%=categoryFilter.id%>">x</a></p>
+                <% }%>
+         
+                <!-- si hay un filtro de precio minimo se muestra por pantalla    -->
+            <% } else if(typeof filterPriceMin != 'undefined'){ %>
+            <%if (typeof categoryFilter == 'undefined') { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter">Min <%=filterPriceMin%> <a class="text-danger" href="/admin/productos">x</a></p>
+            
+            <!-- cuando borro si tenia algo en la categoria lo dejo -->
+            <% } else { %>
+                <p class="alert alert-dark general my-3 d-block bottomFilter">Min <%=filterPriceMin%> <a class="text-danger" href="/admin/productos?filter=<%=categoryFilter.id%>">x</a></p>
+            <% }%>
+            
+            <!-- si hay un filtro de precio maximo se muestra por pantalla -->
+            <% } else if(typeof filterPriceMax != 'undefined'){ %>
+                <%if (typeof categoryFilter == 'undefined') { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter">Max <%=filterPriceMax%> <a class="text-danger" href="/admin/productos">x</a></p>
+            
+            <!-- cuando borro si tenia algo en la categoria lo dejo -->
+                <% } else { %>	
+            <p class="alert alert-dark general my-3 d-block bottomFilter">Max <%=filterPriceMax%> <a class="text-danger" href="/admin/productos?filter=<%=categoryFilter.id%>">x</a></p>
+                <% }%>
+        <% }%>    
+    <%} else {%>   
+        <div class="tipo-producto-filtro">
+            <p><b>Tipo de producto:</b></p>
+            <ul class="lista-filtro-productos">
+                <!-- se imprime la lista de Tipos de categorias que puede elegir el usuario -->
+                <% categories.forEach(category => { %>
+                <form action="/productos" method="GET">
+                    <% if (typeof filterPriceMin != 'undefined') { %>
+                    <input type="hidden" name="filterPriceMin" value="<%=filterPriceMin%>">
+                    <input type="hidden" name="filterPriceMax" value="<%=filterPriceMax%>">
+                    <% }%>
+                    <li class="lista-filtro-productos my-1">
+                        <button class="transparentButtom" name="filter" value="<%= category.id %>"><%= category.name%>
+                        </button>
+                    </li>
+                </form>
+                <% }) %>
+            </ul>
+        </div>
+        <!-- Se puede elegir el filtro de manera individual o de intervalo de precio -->
+        <div class="precio-producto-filtro">
+            <p><b>Precios:</b></p>
+            <!-- input de minimo -->
+            <form action="/productos" method="GET" class="unit my-2 d-none">
+                <% if (typeof filter != 'undefined') { %>
+                <input type="hidden" name="filter" value="<%=filter%>">
+                <% }%>
+                <input type="number" name="filterPriceMin" class="price-filter_value" value="" placeholder="Mín" min="0" max="10000" required>
+                <button type="submit" class="transparentButtom"><i class="fas fa-arrow-circle-right"></i></button>
+            </form>	
+            <!-- input de maximo -->
+            <form action="/productos" method="GET" class="unit my-2 d-none">
+                <% if (typeof filter != 'undefined') { %>
+                <input type="hidden" name="filter" value="<%=filter%>">
+                <% }%>
+                <input type="number" name="filterPriceMax" class="price-filter_value" value="" placeholder="Max" min="0" max="10000" required>
+                <button type="submit" class="transparentButtom"><i class="fas fa-arrow-circle-right"></i></button>
+            </form>
+
+            <!-- Botones para seleccionar si el precio se elige por intervalos o por unidad -->
+            <button id="unit_price" class="btn btn-dark d-none">agregar Min y Max</button>
+            <button id="interv_price" class="btn btn-dark d-none">agregar intervalo</button>
+            
+            <!-- input de intervalo de precios -->
+            <form id="formFilter" action="/productos" method="GET" class="my-2 interv">
+                <% if (typeof filter != 'undefined') { %>
+                <input type="hidden" name="filter" value="<%=filter%>">
+                <% }%>
+                <div class="d-flex">
+                    <div>
+                        <input type="number" name="filterPriceMin" class="price-filter_value mb-2" value="" placeholder="Min" min="0" max="10000" required>
+                        <input type="number" name="filterPriceMax" class="price-filter_value" value="" placeholder="Max" min="0" max="10000" required>
+                    </div>
+                    <span class="d-none invalid-feedback">El valor minimo no puede ser igual o mas alto que el valor maximo.</span>
+                    <button id="buttomFilter" type="submit" name="submit" class="transparentButtom"><i class="fas fa-arrow-circle-right"></i></button>
+                </div>
+            </form>						
+        </div>
+
+
+        
+        <!-- si hay un filtro por categoria se muestra por pantalla -->
+        <% if (typeof categoryFilter != 'undefined') { %>	
+            
+            <% if ((typeof filterPriceMin != 'undefined')&&(typeof filterPriceMax != 'undefined')) { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/productos?filterPriceMin=<%=filterPriceMin%>&filterPriceMax=<%=filterPriceMax%>">x</a></p>        
+<!--             
+            cuando borro si tenia algo en el precio minimo lo dejo
+            <%} else if (typeof filterPriceMin != 'undefined') { %>	
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/productos?filterPriceMin=<%=filterPriceMin%>">x</a></p>
+            
+            cuando borro si tenia algo en el precio maximo lo dejo
+            <% } else if (typeof filterPriceMax != 'undefined') { %>    
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/productos?filterPriceMax=<%=filterPriceMax%>">x</a></p>        
+             -->
+            <!-- cuando borro si tenia algo en el precio minimo y maximo lo dejo -->
+            <%} else if ((typeof filterPriceMin == 'undefined')&&(typeof filterPriceMax == 'undefined')) { %>	
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=categoryFilter.name%> <a class="text-danger" href="/productos">x</a></p>
+           
+            <!-- cuando borro si tenia algo en el precio minimo lo dejo -->
+            <%}%>   
+        <%}%>
+
+
+
+        <!-- falla cuando primero pones la categoria y luego un precio minimo -->
+
+
+
+        <!-- si hay un filtro de intervalo se muestra por pantalla -->
+        <%if ((typeof filterPriceMin != 'undefined')&&(typeof filterPriceMax != 'undefined')) { %>
+            
+            <%if (typeof categoryFilter == 'undefined') { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=filterPriceMin%>-<%=filterPriceMax%> <a class="text-danger" href="/productos">x</a></p>
+            
+            <!-- cuando borro si tenia algo en la categoria lo dejo -->
+            <% } else { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter"><%=filterPriceMin%>-<%=filterPriceMax%> <a class="text-danger" href="/productos?filter=<%=categoryFilter.id%>">x</a></p>
+                <% }%>
+         
+                <!-- si hay un filtro de precio minimo se muestra por pantalla    -->
+            <% } else if(typeof filterPriceMin != 'undefined'){ %>
+            <%if (typeof categoryFilter == 'undefined') { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter">Min <%=filterPriceMin%> <a class="text-danger" href="/productos">x</a></p>
+            
+            <!-- cuando borro si tenia algo en la categoria lo dejo -->
+            <% } else { %>
+                <p class="alert alert-dark general my-3 d-block bottomFilter">Min <%=filterPriceMin%> <a class="text-danger" href="/productos?filter=<%=categoryFilter.id%>">x</a></p>
+            <% }%>
+            
+            <!-- si hay un filtro de precio maximo se muestra por pantalla -->
+            <% } else if(typeof filterPriceMax != 'undefined'){ %>
+                <%if (typeof categoryFilter == 'undefined') { %>
+            <p class="alert alert-dark general my-3 d-block bottomFilter">Max <%=filterPriceMax%> <a class="text-danger" href="/productos">x</a></p>
+            
+            <!-- cuando borro si tenia algo en la categoria lo dejo -->
+                <% } else { %>	
+            <p class="alert alert-dark general my-3 d-block bottomFilter">Max <%=filterPriceMax%> <a class="text-danger" href="/productos?filter=<%=categoryFilter.id%>">x</a></p>
+                <% }%>
+        <% }%>
+    <% }%>
+
+
+
+
+
+        <div>
+
+        </div>
+    </div>
+</div>

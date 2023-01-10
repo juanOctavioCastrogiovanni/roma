@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header.ejs') %>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="h container-fluid fondo-registro general address-forms">
+        <form action="/usuarios/perfil/direcciones" method="POST" id="register-form">
+            <div class="container formulario-login">
+                <h1 class="text-center">Agregue una nueva dirección</h1>
+
+                <div class="login-register-card">
+                    <div class="show-errors">
+                        <% if (typeof errors != 'undefined') { %>
+                        <p class="darkred">ERROR</p>
+                        <ul>
+                            <% errors.forEach(error => { %>
+                            <li class="darkred">
+                                <%= error.msg %>
+                            </li>
+                            <% }) %>
+                        </ul>
+                        <% } %>
+                    </div>
+                     <div class="form-row">
+                        <div class="form-group col-12 col-md-6">
+                            <label for="street">Calle</label>
+                            <input type="text" class="form-control" id="street" aria-describedby="emailHelp"
+                                name="street" value="<%= data.street %>">
+                            <span class="d-none invalid-feedback">Debe ser una calle valida</span>
+                        </div>
+                        <div class="form-group col-6 col-md-2">
+                            <label for="number">Numero</label>
+                            <input type="text" class="form-control" id="number" aria-describedby="emailHelp"
+                                name="number" value="<%= data.number %>">
+                            <span class="d-none invalid-feedback">Debe ser escribir un numero de calle valido</span>
+                        </div>
+                        <div class="form-group col-6 col-md-2">
+                            <label for="floor">Piso</label>
+                            <input type="text" class="form-control" id="floor" aria-describedby="emailHelp"
+                                name="floor" value="<%= data.floor %>">
+                            <span class="d-none invalid-feedback">Debe ser un numero</span>
+                        </div>
+                        <div class="form-group col-12 col-md-2">
+                            <label for="inputPhone">Dto.</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="departament" value="<%= data.departament %>">
+                            <span class="d-none invalid-feedback"></span>
+                        </div>
+                        
+                        <div class="form-group col-12 col-md-5">
+                            <label for="city">Ciudad</label>
+                            <input type="text" class="form-control" id="city" aria-describedby="emailHelp"
+                                name="city" value="<%= data.city%>">
+                            <span class="d-none invalid-feedback">Debe ser una ciudad valida</span>
+                        </div>
+                        <div class="form-group col-12 col-md-5">
+                            <label for="prov">Provincia</label>
+                            <input type="text" class="form-control" id="prov" aria-describedby="emailHelp"
+                                name="prov" value="<%= data.prov%>">
+                            <span class="d-none invalid-feedback">Debe ser una provincia valida</span>
+                        </div>
+                        <div class="form-group col-12 col-md-2">
+                            <label for="inputPhone">Codigo postal</label>
+                            <input type="text" class="form-control" id="inputPhone" aria-describedby="emailHelp"
+                                name="zip_code" value="<%= data.zip_code %>">
+                            <span class="d-none invalid-feedback">Debe ser un codigo postal valido</span>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="alias">Alias</label>
+                            <input type="text" class="form-control" id="alias" aria-describedby="emailHelp"
+                                name="alias" value="<%= data.alias%>">
+                            <span class="d-none invalid-feedback">Debe ser un alias valido</span>
+                        </div>
+    
+                    </div>
+                    
+                    <div class="">
+                        <button type="submit" name="submit" class="btn btn-success mx-1">Agregar dirección</button>
+                    </div>
+                </div>  
+            </div>
+        </form>
+
+    </div>
+    </div>
+    <!-- Main -->
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+    <!-- /footer -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.1/validator.js"
+        integrity="sha512-UpL7Xolu0DUOeG5Zmm7zn/4ZK4wCR7xYEp/fAO0bySJFqoeJG0r4kKPk+YVpuf+2UiEJNAiqSIU35gajAE0mgg=="
+        crossorigin="anonymous">
+    </script>
+    <script src="/js/users/address.js"></script>
+</body>
+
+</html>

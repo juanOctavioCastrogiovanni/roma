@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header.ejs', {user:undefined, admin:undefined}) %>
+    <!-- /Header -->
+
+    <!-- Main -->
+    <div class="h container-fluid fondo-login general">
+        <div class="container formulario-login">
+
+            <% if (logueo == false) {%>
+                <div class="col-12 col-lg-6">
+                    <h4 class="text-center text-danger"><b>No hay coincidencia de usuario y contraseña</b></h4>
+                </div>
+            <% } %>
+
+            <% if (register == true) {%>
+                <div class="col-12">
+                    <h4 class="text-center text-danger"><b>Te has registrado con éxito</b></h4>
+                    <h4 class="text-center text-danger"><b>Logueate para comprar con tu cuenta</b></h4>
+                </div>
+            <% } %>
+
+            <div class="show-errors">
+                <% if (typeof errors != 'undefined') { %>
+                <p class="darkred">ERROR</p>
+                <ul>
+                    <% errors.forEach(error => { %>
+                    <li class="darkred">
+                        <%= error.msg %>
+                    </li>
+                    <% }) %>
+                </ul>
+                <% } %>
+            </div>
+
+            <div class="row login-register-card">
+                <div class="col-12 col-lg-6 login-card d-flex flex-column">
+                    <form action="/usuarios/login" method="POST" id="login-form">
+                        <p><b>COMPRAR USANDO UN USUARIO REGISTRADO</b></p>
+                        <div class="form-group">
+                            <label for="inputEmail1">Email</label>
+                            <input type="text" name="email" class="form-control" id="inputEmail1"
+                                aria-describedby="emailHelp" value="<%=data.email%>">
+                            <span class="d-none invalid-feedback">El email debes ser válido</span>
+                            <small id="emailHelp" class="form-text text-muted">Ingrese el email con el que se ha
+                                registrado</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword1">Contraseña</label>
+                            <input type="password" name="password" class="form-control" id="inputPassword1">
+                            <span class="d-none invalid-feedback">La contraseña debe tener como minimo 8
+                                caracteres</span>
+                            <small id="emailHelp" class="form-text text-muted">Ingrese la contraseña con la que se ha
+                                registrado</small>
+
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" name="remember" value="yes" id="iheck1">
+                            <label class="form-check-label" for="iheck1">Recordarme</label>
+                        </div>
+
+                        <div class="mt-auto">
+                            <button type="submit" name="submit" class="btn btn-info mx-1 btn-login">Entrar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="d-none d-lg-block col-lg-1">
+                    <div class="v-divider"></div>
+                </div>
+
+                <div class="d-lg-none col-12 mt-4 mb-4">
+                    <div class="h-divider"></div>
+                </div>
+
+                <div class="col-12 col-lg-5 register-card d-flex flex-column">
+                    <div class="mb-4">
+                        <p><b>COMPRAR COMO CLIENTE NUEVO</b></p>
+                    </div>
+                    <p class="crear-cuenta-titulo">Crear una cuenta tiene muchos beneficios:</p>
+                    <ul>
+                        <li class="li-register">Almacenar sus direcciones de envío</li>
+
+                        <li class="li-register">Ver el estado de una orden y su envío</li>
+
+                        <li class="li-register">Rastrear su historial de órdenes</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <a type="submit" class="btn btn-primary registrarme btn-register" href="/usuarios/registro">Registrarme</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+    <!-- /footer -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.1.1/validator.js"
+        integrity="sha512-UpL7Xolu0DUOeG5Zmm7zn/4ZK4wCR7xYEp/fAO0bySJFqoeJG0r4kKPk+YVpuf+2UiEJNAiqSIU35gajAE0mgg=="
+        crossorigin="anonymous"></script>
+    <script src="/js/users/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<script src="/js/products/medium-zoom.min.js"></script>
+
+<script src="/js/products/detailProducts.js"></script>
+<script>
+    let img = document.querySelector('div.image')
+    let firstImg = document.querySelector('.image-first')
+    let secondImg = document.querySelector('.image-second')
+    let thirdImg = document.querySelector('.image-third')
+    let quarterImg = document.querySelector('.image-quarter')
+    let flag = 0
+
+    function swicheando(flag) {
+        switch (flag) {
+            case 1:
+                firstImg.classList.remove('selectImg');
+                break;
+            case 2:
+                secondImg.classList.remove('selectImg');
+                break;
+            case 3:
+                thirdImg.classList.remove('selectImg');
+                break;
+            case 4:
+                quarterImg.classList.remove('selectImg');
+                break;
+            default:
+                firstImg.classList.remove('selectImg');
+        }
+    }
+
+    function forEvent(imgClass, productImg, num) {
+        document.querySelector(imgClass).classList.add('selectImg')
+        img.style.backgroundImage = `url("/images/upload/${productImg}")`
+        flag = num
+    }
+
+    if (flag != 1) {
+        firstImg.addEventListener('mouseover', () => {
+            swicheando(flag)
+            forEvent('.image-first', '<%=product.image_1%>', 1);
+        })
+    }
+
+    if (flag != 2) {
+        secondImg.addEventListener('mouseover', () => {
+            swicheando(flag)
+            forEvent('.image-second', '<%=product.image_2%>', 2);
+        })
+    }
+
+    if (flag != 3) {
+        thirdImg.addEventListener('mouseover', () => {
+            swicheando(flag)
+            forEvent('.image-third', '<%=product.image_1%>', 3);
+        })
+    }
+
+    if (flag != 4) {
+        quarterImg.addEventListener('mouseover', () => {
+            swicheando(flag)
+            forEvent('.image-quarter', '<%=product.image_2%>', 4);
+        })
+    }
+</script>

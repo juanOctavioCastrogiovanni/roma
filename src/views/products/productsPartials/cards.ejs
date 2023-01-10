@@ -1,0 +1,31 @@
+<div class="titulo-productos">
+    <h1><a href="/">Home</a>/<a href="<%= userType %>/productos">Productos</a></h1>
+</div>
+
+<div class="search-result">
+    <%if (typeof cant != 'undefined') {%>
+    <% if (cant == 1) { %>
+    <div>
+        <p><b>Se ha encontrado <%=cant%> producto para tu busqueda:</b></p>
+    </div>
+    <% } else {%>
+    <div>
+        <p><b>Se han encontrado <%=cant%> productos para tu busqueda:</b></p>
+    </div>
+    <%}%>
+    <%}%>
+    <%if (products.length == 0) {%>
+    <div class="w-100">
+        <h4 class="text-danger" style="line-height: 100px; text-align: center;">
+            <b>No se han encontrado productos</b>
+        </h4>
+    </div>
+    <%}%>
+</div>
+
+<div class="allProducts row">
+        <%- include('./cardForEach.ejs', {productAll: products}) %>
+</div>
+<%if (typeof word == 'undefined'&&typeof categoryFilter == "undefined") {%>
+    <%- include('./pagination-nav.ejs') %>
+<%}%>

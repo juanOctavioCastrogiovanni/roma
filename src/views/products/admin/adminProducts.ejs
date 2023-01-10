@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<%- include('../../partials/head.ejs') %>
+</head>
+
+<body>
+	<!-- Header -->
+    <%- include('../../partials/header.ejs', {user: user, admin: admin}) %>
+	<!-- /Header -->
+
+	<!-- Main -->
+	<div class="h container-fluid general my-4 reset-link">
+		<div class="row">
+
+            <!-- Filtro sm -->
+            <%- include('../productsPartials/filter-sm.ejs') %>
+            <!-- /Filtro sm -->
+            
+			</div>
+			<div class="col-lg-1 ">
+				<p> </p>
+			</div>
+        
+            <!-- Filtro lg -->
+            <%- include('../productsPartials/filter-lg.ejs') %>
+            <!-- /Filtro lg -->
+			
+			<div class="main-products col-12 col-lg-8">
+
+				<div
+					class="cartel-aviso-productos d-none d-lg-block text-center p-2 tex mb-3">
+					<p>Para crear un producto</p>
+					<a href="/admin/productos/crear"><button type="submit" class="btn btn-danger">Crear produto</button></a>
+				</div>
+
+				<!-- Productos -->
+				
+					<%- include('../productsPartials/cards.ejs', {userType: '/admin'}) %>
+				
+				<!-- /Productos -->
+				
+									
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- Main -->
+
+	<!-- footer -->
+	<%- include('../../partials/footer.ejs') %>
+	<!-- /footer -->
+
+</body>
+
+</html>
